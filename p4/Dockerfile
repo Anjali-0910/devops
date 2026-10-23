@@ -1,7 +1,13 @@
-FROM python:3.9-slim
+# Stage 1 - Build Stage
+FROM node:18 AS build
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY app.py .
-EXPOSE 5000
-CMD ["python", "app.py"]
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+# Stage 2 - Runtime Stage
+FROM node:18-slim
+WORKDIR /app
+COPY --from=build /app /app
+EXPOSE 3000
+CMD ["node", "index.js"]
