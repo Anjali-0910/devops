@@ -15,9 +15,9 @@ git init
 git add .
 git status
 git commit -m "Initial Commit of Flask App"
-sudo docker build -t pg4app .
+sudo docker build -t p4 .
 docker images
-sudo docker run -d -p 5000:5000 --name pg-4container pg4app
+sudo docker run -d -p 5000:5000 --name p4-container p4
 sudo docker ps
 sleep 3
 curl http://localhost:5000
@@ -32,9 +32,9 @@ git diff
 git add app.py
 git commit -m "Update flask app message"
 git log --oneline
-docker build -t pg-4app2 .
-docker stop pg-4container
-docker run -d -p 5000:5000 --name pg-4container2 pg-4app2
+docker build -t p4-v2 .
+docker stop p4-container
+docker run -d -p 5000:5000 --name p4-container2 p4-v2
 sleep 3
 curl http://localhost:5000
 ```
@@ -42,16 +42,16 @@ Output: Updated with Docker!
 
 ## Clean up
 ```bash
-docker stop pg-4container2
-docker rm pg-4container pg-4container2
+docker stop p4-container2
+docker rm p4-container p4-container2
 ```
 
 ## Clone this program from GitHub
 ```bash
 git clone https://github.com/Anjali-0910/devops.git
 cd devops/p4
-sudo docker build -t pg4app .
-sudo docker run -d -p 5000:5000 --name pg-4container pg4app
+sudo docker build -t p4 .
+sudo docker run -d -p 5000:5000 --name p4-container p4
 sleep 3
 curl http://localhost:5000
 ```
