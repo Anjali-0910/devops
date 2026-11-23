@@ -1,0 +1,17 @@
+# 1. Navigate to the project folder
+cd ~/Desktop/devops_lab/devops/p6
+
+# 2. Build the Docker image
+docker build -t p6 .
+
+# 3. Tag the image for GitHub Container Registry (GHCR)
+docker tag p6 ghcr.io/anjali-0910/p6:latest
+
+# 4. Login to GHCR (Replace YOUR_TOKEN with your actual GitHub PAT)
+echo "YOUR_TOKEN" | docker login ghcr.io -u anjali-0910 --password-stdin
+
+# 5. Push the Docker image to GHCR
+docker push ghcr.io/anjali-0910/p6:latest
+
+# 6. Go back to root and push source code to GitHub
+cd ~/Desktop/devops_lab/devops

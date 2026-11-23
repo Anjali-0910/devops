@@ -1,0 +1,25 @@
+# Program 5: Demonstrate CI Integration by Running Jenkins in a Docker Container
+
+sudo apt update
+sudo apt install docker-compose-plugin -y
+docker compose up -d --build
+
+# Step 1: Ensure Docker service is running
+docker --version
+docker compose version
+
+# Step 2: Create and navigate to project folder
+mkdir p5
+cd p5
+
+# Step 3 & 4: (Create Dockerfile and docker-compose.yml files with respective configurations)
+
+# Step 5: Build and Run Jenkins
+docker compose up -d --build
+
+# Step 6: Get initial admin password for browser login at http://localhost:8080
+docker exec jenkins-ci cat /var/jenkins_home/secrets/initialAdminPassword
+
+# Step 7: List images and remove container/image
+docker images
+docker image rm -f program-5-jenkins:latest

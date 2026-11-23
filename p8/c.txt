@@ -1,0 +1,22 @@
+# =====================================================================
+# PROGRAM 8: Create Kubernetes Pods using YAML Descriptors
+# =====================================================================
+
+# STEP 1: START MINIKUBE
+minikube start --driver=docker
+minikube status
+
+# STEP 2: APPLY THE YAML MANIFESTS
+minikube kubectl -- apply -f nodejs-configmap.yaml
+minikube kubectl -- apply -f nodejs-pod.yaml
+
+# STEP 3: CHECK POD STATUS
+minikube kubectl -- get pods
+
+# STEP 4: ACCESS THE NODE.JS APP (Port Forwarding)
+minikube kubectl -- port-forward pod/program-8 3000:3000
+
+# STEP 5: CLEAN-UP PROCESS
+minikube kubectl -- delete pods --all
+minikube kubectl -- delete svc --all
+minikube kubectl -- delete deployments --all

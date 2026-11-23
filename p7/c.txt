@@ -1,0 +1,52 @@
+
+# 1. Download the Minikube binary for Linux
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+# 2. Install Minikube system-wide
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# 3. Verify installation
+minikube version
+
+
+# STEP 1: START MINIKUBE
+# Start Minikube using the Docker driver
+minikube start --driver=docker
+
+# Check status to ensure Control Plane, host, kubelet, and apiserver are running
+minikube status
+
+
+# STEP 2: APPLY THE DEPLOYMENT CONFIGURATION
+# Apply the nginx-deployment.yaml file to create the deployment (2 replicas)
+minikube kubectl -- apply -f nginx-deployment.yaml
+
+# Verify deployments and pods status
+minikube kubectl -- get deployments
+minikube kubectl -- get pods
+
+
+# STEP 3: EXPOSE THE DEPLOYMENT AS A SERVICE
+# Expose the deployment using NodePort on port 80
+minikube kubectl -- expose deployment nginx-deployment \
+  --type=NodePort \
+  --port=80
+
+# Check active services
+minikube kubectl -- get services
+
+
+# =====================================================================
+# STEP 4: ACCESS THE WEB APPLICATION
+# =====================================================================
+# Open the service URL in your default browser via Minikube
+minikube service nginx-deployment
+
+
+# =====================================================================
+# STEP 5: CLEAN-UP PROCESS (After Lab Completion)
+# =====================================================================
+# Delete all pods, services, and deployments
+minikube kubectl -- delete pods --all
+minikube kubectl -- delete svc --all
+minikube kubectl -- delete deployments --all

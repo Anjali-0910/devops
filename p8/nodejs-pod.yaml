@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: program-8
+  labels:
+    app: nodejs
+spec:
+  containers:
+  - name: nodejs
+    image: node:18
+    command: ["node", "/usr/src/app/server.js"]
+    volumeMounts:
+    - name: app-code
+      mountPath: /usr/src/app
+    ports:
+    - containerPort: 3000
+  volumes:
+  - name: app-code
+    configMap:
+      name: nodejs-app-config
