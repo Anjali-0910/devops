@@ -2,29 +2,62 @@
 # PROGRAM 9: Organize Kubernetes Pods Using Labels and Namespaces
 # =====================================================================
 
-# STEP 0: ENSURE MINIKUBE IS RUNNING (If needed on college system)
+# =====================================================================
+# STEP 0: INSTALL DOCKER & MINIKUBE (Run only if not installed on college system)
+# =====================================================================
+# 1. Install Docker (if "PROVIDER_DOCKER_NOT_FOUND" occurs)
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+
+# 2. Install Minikube (if "minikube: command not found" occurs)
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+rm -f minikube-linux-amd64
+minikube version
+
+
+# =====================================================================
+# STEP 1: START MINIKUBE
+# =====================================================================
 minikube start --driver=docker
 minikube status
 
-# STEP 1 & 2: APPLY NAMESPACES AND PODS YAML FILES
+
+# =====================================================================
+# STEP 2: APPLY NAMESPACES AND PODS YAML FILES
+# =====================================================================
 minikube kubectl -- apply -f namespaces.yaml
 minikube kubectl -- apply -f pods.yaml
 
+
+# =====================================================================
 # STEP 3: VERIFY PODS BY NAMESPACE
+# =====================================================================
 minikube kubectl -- get pods -n dev
 minikube kubectl -- get pods -n prod
 
+
+# =====================================================================
 # STEP 4: CHECK POD STATUS (DEFAULT NAMESPACE)
+# =====================================================================
 minikube kubectl -- get pods
 
+
+# =====================================================================
 # STEP 5: FILTER PODS BY LABEL
+# =====================================================================
 # List all frontend pods in dev namespace
 minikube kubectl -- get pods -n dev -l app=frontend
 
 # List all backend pods in prod namespace
 minikube kubectl -- get pods -n prod -l app=backend
 
-# STEP 6: CLEAN-UP PROCESS
+
+# =====================================================================
+# STEP 6: CLEAN-UP PROCESS (After Lab Completion)
+# =====================================================================
 minikube kubectl -- delete pods --all -n dev
 minikube kubectl -- delete pods --all -n prod
 minikube kubectl -- delete pods --all
